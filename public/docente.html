@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Docente - Liceo Tame</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="profile-page-body">
+
+    <div class="profile-container">
+        <!-- Botón Volver a inicio -->
+        <div class="back-nav">
+            <a href="/" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Volver a inicio
+            </a>
+        </div>
+
+        <!-- Tarjeta de Cabecera del Perfil -->
+        <header class="profile-header-card">
+            <div class="profile-header-left">
+                <div class="profile-photo-container" id="profile-photo-container">
+                    <!-- Se carga dinámicamente (foto o avatar) -->
+                    <div class="avatar-placeholder"><i class="fas fa-user"></i></div>
+                </div>
+                <div class="profile-name-section">
+                    <h1 id="docente-nombre" class="profile-full-name">Cargando...</h1>
+                    <p id="docente-cargo" class="profile-role">Docente</p>
+                    
+                    <!-- Pestañas de Anclaje Rápido -->
+                    <nav class="profile-nav-anchors">
+                        <a href="#perfil" class="anchor-link active"><i class="fas fa-user"></i> Perfil</a>
+                        <a href="#materias" class="anchor-link"><i class="fas fa-book"></i> Materias</a>
+                        <a href="#horario" class="anchor-link"><i class="fas fa-calendar-alt"></i> Horario</a>
+                        <a href="#contacto" class="anchor-link"><i class="fas fa-envelope"></i> Contacto</a>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="profile-header-right">
+                <div class="info-general-card">
+                    <h3>Información General</h3>
+                    <div class="general-info-item">
+                        <strong>Sede</strong>
+                        <span id="info-sede">Cargando...</span>
+                    </div>
+                    <div class="general-info-item">
+                        <strong>Formación Académica</strong>
+                        <span id="info-formacion">Cargando...</span>
+                    </div>
+                    <div class="general-info-item">
+                        <strong>Nivel Académico</strong>
+                        <span id="info-nivel-academico">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenido en cuadrícula de Dashboard -->
+        <div class="profile-dashboard-grid">
+            
+            <!-- Columna Izquierda: Sobre mí (ID: perfil) -->
+            <section id="perfil" class="dashboard-card card-sobre-mi">
+                <h2>Sobre mí</h2>
+                <p id="docente-sobre-mi" class="sobre-mi-text">Cargando biografía...</p>
+            </section>
+
+            <!-- Columna Central: Materias que enseña (ID: materias) -->
+            <section id="materias" class="dashboard-card card-materias-enseña">
+                <h2>Materias que enseña</h2>
+                <div id="materias-container" class="profile-materias-badges">
+                    <!-- Se cargan dinámicamente -->
+                </div>
+            </section>
+
+            <!-- Columna Derecha: Información de Contacto -->
+            <section id="contacto" class="dashboard-card card-contacto">
+                <h2>Información de Contacto</h2>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span id="docente-email">Cargando...</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span id="docente-telefono">Cargando...</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fila Inferior Izquierda/Centro (Ancho): Horario de Clases (ID: horario) -->
+            <section id="horario" class="dashboard-card card-horario-clases">
+                <h2>Horario de Clases</h2>
+                <div class="horario-table-wrapper">
+                    <table class="profile-horario-table">
+                        <thead>
+                            <tr>
+                                <th>Bloque</th>
+                                <th>Hora</th>
+                                <th>Lunes</th>
+                                <th>Martes</th>
+                                <th>Miércoles</th>
+                                <th>Jueves</th>
+                                <th>Viernes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="profile-horario-body">
+                            <!-- Se carga dinámicamente con JS (bloques 1-6) -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Fila Inferior Derecha: Horario de Atención -->
+            <section class="dashboard-card card-horario-atencion">
+                <h2>Horario de Atención</h2>
+                <p class="atencion-subtitle">Lunes a Viernes</p>
+                <p id="docente-atencion-horas" class="atencion-hours">Cargando...</p>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Footer Verde Institucional -->
+    <footer class="profile-footer">
+        <div class="profile-footer-content">
+            <div class="footer-col brand-col">
+                <div class="footer-logo-row">
+                    <img src="/school_logo.jpg" alt="Liceo Tame Logo" class="footer-logo">
+                    <div>
+                        <h3>LICEO TAME</h3>
+                        <p>Portal de Docentes</p>
+                    </div>
+                </div>
+                <p class="footer-description">
+                    Institución educativa comprometida con la excelencia académica y la formación integral de nuestros estudiantes.
+                </p>
+            </div>
+            
+            <div class="footer-col contact-col">
+                <h4>Información de Contacto</h4>
+                <p id="footer-contact-email"></p>
+                <p id="footer-contact-telefono"></p>
+                <p id="footer-contact-direccion"></p>
+            </div>
+            
+            <div class="footer-col links-col">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="/">Docentes</a></li>
+                    <li><a href="/#tab-docentes-area">Áreas Académicas</a></li>
+                    <li><a href="/portal">Admin Portal</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col social-col">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="profile-footer-bottom">
+            <p>© 2026 Liceo Tame. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="/contacto-footer.js?v=1"></script>
+    <script src="/docente.js"></script>
+</body>
+</html>

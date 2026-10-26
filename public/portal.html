@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liceo Tame - Panel Administrativo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css?v=2">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Login -->
+    <div id="loginContainer" class="login-container">
+        <div class="login-box">
+            <h2><i class="fas fa-user-shield"></i> Panel Administrativo</h2>
+            <p class="login-subtitle">Liceo Tame - Gestión de Docentes</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Usuario</label>
+                    <input type="text" id="username" placeholder="Ingresa tu usuario" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+                </div>
+                <button type="submit" class="btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                </button>
+                <div id="loginError" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Panel Admin -->
+    <div id="adminPanel" style="display:none;">
+        <header>
+            <div class="header-content">
+                <h1>Panel Administrativo</h1>
+                <div class="user-info">
+                    <span id="userName">Admin</span>
+                    <button id="btnChangePassword" class="btn-logout" style="background:#e65100;color:white;" title="Cambiar contraseña">
+                        <i class="fas fa-key"></i> Cambiar Contraseña
+                    </button>
+                    <button id="logoutBtn" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Pestañas de navegación -->
+            <nav class="admin-tabs">
+				<button class="tab-btn active" data-tab="dashboard">
+					<i class="fas fa-chart-bar"></i> Dashboard
+				</button>
+				<button class="tab-btn" data-tab="docentes">
+					<i class="fas fa-users"></i> Docentes
+				</button>
+				<button class="tab-btn" data-tab="areas">
+					<i class="fas fa-book"></i> Áreas
+				</button>
+				<button class="tab-btn" data-tab="materias">  <!-- 🔥 NUEVO -->
+					<i class="fas fa-graduation-cap"></i> Materias
+				</button>
+				<!-- En el menú de tabs -->
+				<button class="tab-btn" data-tab="horarios">
+					<i class="fas fa-clock"></i> Horarios
+				</button>
+				<button class="tab-btn" data-tab="sedes">
+					<i class="fas fa-map-marker-alt"></i> Sedes
+				</button>
+				<button class="tab-btn" data-tab="contacto">
+					<i class="fas fa-address-book"></i> Contacto
+				</button>
+			</nav>
+
+            <!-- Dashboard -->
+            <!-- Dashboard -->
+<div id="tab-dashboard" class="tab-content active">
+    <!-- Tarjetas de estadísticas -->
+    <div class="dashboard-stats" id="dashboardStats">
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3 id="totalDocentes">0</h3>
+                <p>Total Docentes</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3 id="totalAreas">0</h3>
+                <p>Áreas Académicas</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3 id="totalMaterias">0</h3>
+                <p>Materias</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3 id="totalGenero">0</h3>
+                <p>Distribución por Género</p>
+                <span class="stat-change" id="generoDetalle">Hombres: 0 · Mujeres: 0</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3 id="totalSedes">0</h3>
+                <p>Sedes</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficas -->
+    <div class="charts-grid">
+        <div class="chart-card">
+            <h4><i class="fas fa-chart-bar"></i> Docentes por Área</h4>
+            <canvas id="chartArea" height="250"></canvas>
+        </div>
+        <div class="chart-card">
+            <h4><i class="fas fa-chart-pie"></i> Distribución por Género</h4>
+            <canvas id="chartGenero" height="250"></canvas>
+        </div>
+        <div class="chart-card">
+            <h4><i class="fas fa-map-marker-alt"></i> Docentes por Sede</h4>
+            <canvas id="chartSede" height="250"></canvas>
+        </div>
+    </div>
+
+    <!-- Últimos Docentes y Estado -->
+    <div class="dashboard-bottom">
+        <div class="recent-docentes">
+            <h4><i class="fas fa-clock"></i> Últimos Docentes Registrados</h4>
+            <div id="ultimosDocentes">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </div>
+        <div class="status-cards">
+            <div class="status-card">
+                <h4><i class="fas fa-circle"></i> Estado de Docentes</h4>
+                <div id="estadoDocentes">
+                    <!-- Se llena dinámicamente -->
+                </div>
+            </div>
+            <div class="status-card">
+                <h4><i class="fas fa-tag"></i> Tipo de Vinculación</h4>
+                <div id="nombramientoDocentes">
+                    <!-- Se llena dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Gestión de Docentes -->
+<div id="tab-docentes" class="tab-content">
+    <div class="admin-header">
+        <h2><i class="fas fa-users"></i> Gestión de Docentes</h2>
+        <button id="btnNewDocente" class="btn-primary">
+            <i class="fas fa-plus"></i> Nuevo Docente
+        </button>
+    </div>
+
+    <!-- 🔥 BARRA DE BÚSQUEDA Y FILTROS -->
+    <div class="search-bar" style="margin-bottom: 1.5rem; background: #f8fafc; padding: 1rem; border-radius: 8px;">
+        <!-- Fila 1: Campos de filtro -->
+        <div style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 0.8rem;">
+            <div style="flex: 2; min-width: 250px;">
+                <label style="font-weight: 600; color: var(--primary-color); display: block; margin-bottom: 0.3rem;">
+                    <i class="fas fa-user"></i> Buscar por Nombre
+                </label>
+                <input type="text" id="searchNombre" placeholder="Escriba el nombre del docente" 
+                       style="width:100%; padding:0.7rem; border:2px solid #e2e8f0; border-radius:8px; font-size:1rem; box-sizing:border-box;">
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <label style="font-weight: 600; color: var(--primary-color); display: block; margin-bottom: 0.3rem;">
+                    <i class="fas fa-map-marker-alt"></i> Filtrar por Sede
+                </label>
+                <select id="filterSedeDocente" style="width:100%; padding:0.7rem; border:2px solid #e2e8f0; border-radius:8px; font-size:1rem;">
+                    <option value="todos">Todas las Sedes</option>
+                </select>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <label style="font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">
+                    <i class="fas fa-filter"></i> Filtrar por Estado
+                </label>
+                <select id="filterEstadoDocente" style="width:100%; padding:0.7rem; border:2px solid #e2e8f0; border-radius:8px; font-size:1rem;">
+                    <option value="todos">Todos</option>
+                    <option value="activos">Activos</option>
+                    <option value="inactivos">Inactivos</option>
+                </select>
+            </div>
+        </div>
+        <!-- Fila 2: Botones de acción -->
+        <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+            <button id="btnBuscarNombre" class="btn-primary" style="white-space: nowrap;">
+                <i class="fas fa-search"></i> Buscar
+            </button>
+            <button id="btnLimpiarBusqueda" class="btn-warning" style="white-space: nowrap;">
+                <i class="fas fa-times"></i> Limpiar
+            </button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cédula</th>
+                    <th>Área</th>
+                    <th>Sede</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="docentesTableBody">
+                <!-- Se llena dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+            <!-- Gestión de Sedes -->
+            <div id="tab-sedes" class="tab-content">
+                <div class="admin-header">
+                    <h2><i class="fas fa-map-marker-alt"></i> Gestión de Sedes</h2>
+                    <button id="btnNewSede" class="btn-primary">
+                        <i class="fas fa-plus"></i> Nueva Sede
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Dirección</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sedesTableBody">
+                            <!-- Se llena dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Información de Contacto (Portal Público) -->
+            <div id="tab-contacto" class="tab-content">
+                <div class="admin-header">
+                    <h2><i class="fas fa-address-book"></i> Información de Contacto</h2>
+                </div>
+
+                <div style="max-width:820px;background:#f8fafc;padding:1.5rem;border-radius:10px;border:1px solid #e2e8f0;">
+                    <form id="contactoForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cont_email"><i class="fas fa-envelope"></i> Correo electrónico</label>
+                                <input type="email" id="cont_email" maxlength="150" placeholder="contacto@liceotame.edu.co">
+                            </div>
+                            <div class="form-group">
+                                <label for="cont_telefono"><i class="fas fa-phone"></i> Teléfono</label>
+                                <input type="text" id="cont_telefono" maxlength="50" placeholder="(601) 123 4567">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cont_direccion"><i class="fas fa-map-marker-alt"></i> Dirección</label>
+                            <input type="text" id="cont_direccion" maxlength="255" placeholder="Carrera 15 # 12-34">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cont_ciudad"><i class="fas fa-city"></i> Ciudad</label>
+                                <input type="text" id="cont_ciudad" maxlength="100" placeholder="Tame">
+                            </div>
+                            <div class="form-group">
+                                <label for="cont_departamento"><i class="fas fa-map"></i> Departamento</label>
+                                <input type="text" id="cont_departamento" maxlength="100" placeholder="Arauca">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cont_pais"><i class="fas fa-flag"></i> País</label>
+                            <input type="text" id="cont_pais" maxlength="100" placeholder="Colombia">
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-block">
+                            <i class="fas fa-save"></i> Guardar Información de Contacto
+                        </button>
+                        <div id="contactoMsg" style="margin-top:0.8rem;font-weight:600;"></div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Gestión de Áreas -->
+            <div id="tab-areas" class="tab-content">
+                <div class="admin-header">
+                    <h2><i class="fas fa-book"></i> Gestión de Áreas</h2>
+                    <button id="btnNewArea" class="btn-primary">
+                        <i class="fas fa-plus"></i> Nueva Área
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Icono</th>
+                                <th>Popular</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="areasTableBody">
+                            <!-- Se llena dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+			<!-- Después de la sección de áreas, agregar: -->
+
+			<!-- Gestión de Materias -->
+			<div id="tab-materias" class="tab-content">
+				<div class="admin-header">
+					<h2><i class="fas fa-graduation-cap"></i> Gestión de Materias</h2>
+					<button id="btnNewMateria" class="btn-primary">
+						<i class="fas fa-plus"></i> Nueva Materia
+					</button>
+				</div>
+
+				<!-- Filtro por área -->
+				<div style="margin-bottom:1.5rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;background:#f8fafc;padding:1rem;border-radius:8px;">
+					<div style="flex:1;min-width:200px;">
+						<label style="font-weight:600;color:var(--primary-color);display:block;margin-bottom:0.3rem;">
+							<i class="fas fa-filter"></i> Filtrar por Área
+						</label>
+						<select id="filterMateriaArea" style="width:100%;padding:0.7rem;border:2px solid #e2e8f0;border-radius:8px;font-size:1rem;">
+							<option value="todos">Todas las Áreas</option>
+						</select>
+					</div>
+					<div style="flex:1;min-width:200px;">
+						<label style="font-weight:600;color:var(--text-muted);display:block;margin-bottom:0.3rem;">
+							<i class="fas fa-search"></i> Buscar Materia
+						</label>
+						<input type="text" id="searchMateria" placeholder="Ej: Álgebra" style="width:100%;padding:0.7rem;border:2px solid #e2e8f0;border-radius:8px;font-size:1rem;">
+					</div>
+				</div>
+
+				<div class="table-container">
+					<table class="admin-table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Nombre</th>
+								<th>Área</th>
+								<th>Docentes</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody id="materiasTableBody">
+							<!-- Se llena dinámicamente -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- Gestión de Horarios -->
+			<div id="tab-horarios" class="tab-content">
+				<div class="admin-header">
+					<h2><i class="fas fa-clock"></i> Gestión de Horarios</h2>
+					<div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+						<select id="horarioDocente" style="padding:0.5rem;border:2px solid #e2e8f0;border-radius:8px;">
+							<option value="">Seleccionar Docente</option>
+						</select>
+						<select id="horarioAno" style="padding:0.5rem;border:2px solid #e2e8f0;border-radius:8px;">
+							<option value="">Seleccionar Año</option>
+						</select>
+						<button id="btnCargarHorario" class="btn-primary">
+							<i class="fas fa-search"></i> Cargar
+						</button>
+						<button id="btnNewHorario" class="btn-primary">
+							<i class="fas fa-plus"></i> Asignar Clase
+						</button>
+					</div>
+				</div>
+
+				<!-- Vista de horario tipo matriz -->
+				<div class="horario-container">
+					<div id="horarioInfo" style="margin-bottom:1rem;padding:0.8rem 1rem;background:#f0fdf4;border-radius:8px;display:none;">
+						<strong id="horarioDocenteNombre"></strong> - <span id="horarioAnoNombre"></span>
+					</div>
+
+					<div class="horario-grid">
+						<div class="horario-header">
+							<div>Bloque</div>
+							<div>Hora</div>
+							<div>Lunes</div>
+							<div>Martes</div>
+							<div>Miércoles</div>
+							<div>Jueves</div>
+							<div>Viernes</div>
+						</div>
+						<div id="horarioBody">
+							<!-- Se llena dinámicamente -->
+							<div style="text-align:center;padding:2rem;color:var(--text-muted);">
+								<i class="fas fa-info-circle"></i> Selecciona un docente y periodo para ver el horario
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+    <!-- Modal para crear/editar -->
+    <div id="modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Nuevo Registro</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Módulos del portal (refactorizados) -->
+    <script src="portal-ui.js?v=2"></script>
+    <script src="portal-auth.js?v=2"></script>
+    <script src="portal-dashboard.js?v=2"></script>
+    <script src="portal-docentes.js?v=4"></script>
+    <script src="portal-areas.js?v=2"></script>
+    <script src="portal-materias.js?v=2"></script>
+    <script src="portal-horarios.js?v=4"></script>
+    <script src="portal-sedes.js?v=2"></script>
+    <script src="portal-contacto.js?v=1"></script>
+    <script src="portal-init.js?v=4"></script>
+</body>
+</html>

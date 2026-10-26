@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liceo Tame - Consulta de Docentes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div>
+                <h1>Liceo Tame</h1>
+                <p>Sistema de Consulta de Docentes</p>
+            </div>
+            <div class="header-actions">
+                <span class="badge-header"><i class="fas fa-chalkboard-teacher"></i> <span id="header-docentes-count">0</span> Docentes</span>
+                <div class="header-social">
+                    <span class="header-social-label">Síguenos:</span>
+                    <a href="#" class="header-social-icon" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="header-social-icon" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="header-social-icon" aria-label="YouTube" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="header-social-icon" aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Barra de Pestañas -->
+    <nav class="nav-tabs">
+        <div class="nav-tabs-content">
+            <button class="tab-link active" data-tab="inicio">
+                <i class="fas fa-home"></i> Inicio
+            </button>
+            <button class="tab-link" data-tab="docentes">
+                <i class="fas fa-users"></i> Docentes
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Pestaña Inicio -->
+        <div id="tab-inicio" class="tab-content active">
+            <!-- Hero Card (Bienvenida) -->
+            <div class="hero-card">
+                <div class="hero-left">
+                    <div class="hero-badge-container">
+                        <div class="logo-badge">
+                            <img src="school_logo.png" alt="Liceo Tame Logo" class="school-logo">
+                        </div>
+                        <span class="portal-badge"><i class="fas fa-school"></i> PORTAL DOCENTES</span>
+                    </div>
+                    
+                    <h2 class="hero-title">Bienvenido al <br><span class="green-text">Portal de Docentes <br>Liceo Tame</span></h2>
+                    <p class="hero-description">Encuentra información académica, horarios, contacto y más sobre nuestros docentes.</p>
+                    
+                    <div class="hero-search-container">
+                        <i class="fas fa-search search-icon-left"></i>
+                        <input type="text" id="hero-search-input" placeholder="Buscar docente por nombre, materia o área...">
+                        <button id="hero-search-btn" class="btn-search-green">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="popular-tags">
+                        <span class="popular-label">Populares:</span>
+                        <div class="popular-buttons" id="popularAreas">
+                            <!-- Se carga dinámicamente desde app.js -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-image-wrapper">
+                        <img src="imagen_institucion.jpeg" alt="Liceo Tame Entrada" class="school-image">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tarjetas de Estadísticas -->
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-icon-circle">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3 id="stat-docentes-count">0</h3>
+                        <p class="stat-title">Docentes</p>
+                        <p class="stat-desc">Profesionales comprometidos</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon-circle">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3 id="stat-areas-count">0</h3>
+                        <p class="stat-title">Áreas Académicas</p>
+                        <p class="stat-desc">Conocimiento diversificado</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestaña Docentes -->
+        <div id="tab-docentes" class="tab-content">
+            <!-- Filtros avanzados estilo horizontal -->
+            <section class="filters-section">
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label for="search-name"><i class="fa-solid fa-magnifying-glass"></i> Buscar por Nombre</label>
+                        <input type="text" id="search-name" placeholder="Ej: Carlos...">
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filter-area"><i class="fa-solid fa-book-open"></i> Área Académica</label>
+                        <select id="filter-area">
+                            <option value="todos">Todas las Áreas</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filter-level"><i class="fa-solid fa-graduation-cap"></i> Nivel Académico</label>
+                        <select id="filter-level">
+                            <option value="todos">Todos los Niveles</option>
+                            <option value="Licenciado">Licenciatura / Profesional</option>
+                            <option value="Especialista">Especialización</option>
+                            <option value="Magíster">Maestría / Magíster</option>
+                            <option value="Doctor">Doctorado</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filter-sede"><i class="fa-solid fa-map-marker-alt"></i> Sede</label>
+                        <select id="filter-sede">
+                            <option value="todos">Todas las Sedes</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filter-gender"><i class="fa-solid fa-venus-mars"></i> Género</label>
+                        <select id="filter-gender">
+                            <option value="todos">Todos</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Botón de limpiar filtros en la esquina inferior derecha -->
+                <div class="filters-clear-row">
+                    <button id="btn-limpiar-filtros" class="btn-secondary-clear">
+                        <i class="fas fa-undo"></i> Limpiar Filtros
+                    </button>
+                </div>
+            </section>
+
+            <!-- Resultados -->
+            <div class="results-count" id="results-count">Cargando docentes...</div>
+
+            <main class="teachers-grid" id="teachers-container">
+                <!-- Los docentes se cargan dinámicamente -->
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer Verde Institucional -->
+    <footer class="profile-footer">
+        <div class="profile-footer-content">
+            <div class="footer-col brand-col">
+                <div class="footer-logo-row">
+                    <img src="/school_logo.png" alt="Liceo Tame Logo" class="footer-logo">
+                    <div>
+                        <h3>LICEO TAME</h3>
+                        <p>Portal de Docentes</p>
+                    </div>
+                </div>
+                <p class="footer-description">
+                    Institución educativa comprometida con la excelencia académica y la formación integral de nuestros estudiantes.
+                </p>
+            </div>
+            
+            <div class="footer-col contact-col">
+                <h4>Información de Contacto</h4>
+                <p id="footer-contact-email"></p>
+                <p id="footer-contact-telefono"></p>
+                <p id="footer-contact-direccion"></p>
+            </div>
+            
+            <div class="footer-col links-col">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="/#tab-docentes">Docentes</a></li>
+                    <li><a href="/#tab-docentes-area">Áreas Académicas</a></li>
+                    <li><a href="/portal">Admin Portal</a></li>
+                </ul>
+            </div>
+            
+
+        </div>
+        <div class="profile-footer-bottom">
+            <p>© 2026 Liceo Tame. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="contacto-footer.js?v=1"></script>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
