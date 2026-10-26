@@ -64,7 +64,7 @@ Incluye un **portal público** de consulta de docentes y un **panel administrati
 
 - `database.sql` es la **fuente única de verdad**: contiene el esquema completo (incluyendo `sedes`) y datos de prueba.
 - Las migraciones en `backend/migrations/` documentan cambios incrementales ya aplicados.
-- Nota: `C:/pilib/litame.sql` es un dump antiguo de HeidiSQL; usar `database.sql` en su lugar.
+- Nota: `C:/db.sql` es un dump antiguo de HeidiSQL; usar `database.sql` en su lugar.
 
 ## 🔒 Seguridad
 
