@@ -147,3 +147,27 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Dependencias
+node_modules/
+backend/node_modules/
+
+# Variables de entorno (contienen credenciales)
+.env
+*.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos temporales de Windows (creados accidentalmente con redirecciones)
+nul
+
+# Editor
+.vscode/
+.idea/
